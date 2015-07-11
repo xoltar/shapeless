@@ -25,6 +25,16 @@ import scala.reflect.macros.{ blackbox, whitebox }
 import tag.@@
 import scala.util.Try
 
+/** Witness captures the relationship between a singleton type T and the single value of that type,
+  * which is known as the "witness" of that type. For example, String is the type of all strings,
+  * but "foo".type (if that syntax were allowed in Scala) would be the (singleton) type of "foo",
+  * that is, the type of all strings that are "foo", a type which is inhabited only by the string "foo".
+  *
+  * Such types are surprisingly useful. Among other things, they are used to implement the field
+  * labels in [[LabelledGeneric]]
+  *
+  */
+//TODO explain how to get a witness
 trait Witness extends Serializable {
   type T
   val value: T {}
