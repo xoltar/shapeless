@@ -21,10 +21,15 @@ import scala.language.experimental.macros
 import scala.reflect.macros.whitebox
 
 object labelled {
+  //TODO this is a "don't try this at home" class
   /**
    * The type of fields with keys of singleton type `K` and value type `V`.
    */
+  //TODO at runtime there's no subclass, it's just a V.
+  //this type exists only at compile time.
   type FieldType[K, +V] = V with KeyTag[K, V]
+
+  //TODO this is a trait rather than just a type mostly to work around various compiler bugs
   trait KeyTag[K, +V]
 
   /**
@@ -33,6 +38,7 @@ object labelled {
   def field[K] = new FieldBuilder[K]
 
   class FieldBuilder[K] {
+    //TODO this is technically unsound but Java never sees more than the raw v here.
     def apply[V](v : V): FieldType[K, V] = v.asInstanceOf[FieldType[K, V]]
   }
 }
