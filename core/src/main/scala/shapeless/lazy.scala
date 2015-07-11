@@ -21,6 +21,11 @@ import scala.language.experimental.macros
 import scala.collection.immutable.ListMap
 import scala.reflect.macros.whitebox
 
+//TODO used to avoid "divergent implicit search". We don't know that compilation will terminate sometimes.
+//e.g. Tree[T]. Tells the compiler you know it's OK to calculate the implicit expansion without worrying
+//about divergence
+//Controls the implicit lookup, builds dictionary of types encountered in order to avoid loops in
+//lookup.
 trait Lazy[+T] extends Serializable {
   val value: T
 
